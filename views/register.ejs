@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% include partials/head %>
+</head>
+<body>
+  <header>
+    <% include partials/navbar %>
+  </header>
+  <main>
+    <div class="content valign-wrapper">
+      <div class="container">
+        <h4 class="center-align"><%=page%></h4>
+        <%if(typeof result != 'undefined'){%>
+        <div class="row">
+          <div class="col s12">
+            <div class="card-panel <%if(result.status) {%>teal<%} else {%>red<%}%> lighten-4">
+              <span class="black-text"><%=result.message%></span>
+            </div>
+          </div>
+        </div>
+        <%}%>
+        <div class="row">
+          <form class="col l6 offset-l3" method="post">
+              <div class="input-field col s3">
+                <select name="gender" id="gender" required>
+                  <option value="" disabled selected>Pilih</option>
+                  <option value="1">Bapak</option>
+                  <option value="2">Ibu</option>
+                </select>
+                <label>Titel</label>
+              </div>
+              <div class="input-field col s9">
+                <input id="nama" name="nama" type="text" class="validate" required>
+                <label for="nama">Nama</label>
+              </div>
+              <div class="input-field col s12">
+                <input id="email" name="email" type="email" class="validate" required>
+                <label for="email">Email</label>
+              </div>
+              <div class="input-field col s12">
+                <input id="telp" name="telp" type="tel" class="validate" required>
+                <label for="telp">Telepon</label>
+              </div>
+              <div class="input-field col s12">
+                <input id="password" name="password" type="password" class="validate" required>
+                <label for="password">Password</label>
+              </div>
+              <div class="right-align">
+                <button type="submit" class="btn">Sign Up</button>
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer>
+    
+  </footer>
+  <% include partials/script %>
+</body>
+</html>

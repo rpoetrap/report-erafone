@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% include partials/head %>
+</head>
+<body>
+  <header>
+    <% include partials/navbar %>
+  </header>
+  <main>
+    <div class="content valign-wrapper">
+      <div class="container">
+        <% if(user){%>
+        <div class="row">
+          <div class="col s12">
+            <h4 class="center-align">Keluhan Saya</h4>
+            <div class="collection">
+              <div class="row collection-item black-text">
+                <div class="col s2 m1"><b>No</b></div>
+                <div class="col s7 m6 l8 truncate"><b>Komplain</b></div>
+                <div class="col m3 l2 hide-on-small-only"><b>Tanggal</b></div>
+                <div class="col s3 m2 l1 center-align"><b>Status</b></div>
+              </div>
+              <%for(var i = 0; i < reports.length; i++){%>
+              <a class="row collection-item black-text">
+                <div class="col s2 m1"><%=((pagination.current - 1) * 10) + (i + 1)%></div>
+                <div class="col s7 m6 l8 truncate"><%=reports[i].masalah%></div>
+                <div class="col m3 l2 hide-on-small-only"><%=reports[i].tanggal%></div>
+                <div class="col s3 m2 l1"><span class="new badge <%=(reports[i].status) ? 'deep-orange':'teal'%>" data-badge-caption="<%=(reports[i].status) ? 'Open':'Close'%>"></span></div>
+              </a>
+              <%}%>
+              <div class="collection-item center-align">
+                <button class="btn waves-effect waves-light deep-orange modal-trigger" data-target="keluhan"><i class="material-icons left">add</i>Keluhan Baru</button>
+              </div>
+            </div>
+            <ul class="pagination center-align">
+              <li class="<%=(pagination.current == 1) ? 'disabled' : 'waves-effect'%>"><a <%=(pagination.current > 1) ? 'href=?page='+(parseInt(pagination.current) - 1) : ''%>><i class="material-icons">chevron_left</i></a></li>
+              <%pagination.pages.forEach((pages) => {%>
+              <li class="<%=(pages == pagination.current) ? 'active teal': 'waves-effect'%>"><a <%=(pages != pagination.current) ? 'href=?page='+pages: ''%>><%=pages%></a></li>
+              <%})%>
+              <li class="<%=(pagination.current == Math.ceil(pagination.total/10)) ? 'disabled' : 'waves-effect'%>"><a <%=(pagination.current < Math.ceil(pagination.total/10)) ? 'href=?page='+(parseInt(pagination.current) + 1) : ''%>><i class="material-icons">chevron_right</i></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="modal modal-fixed-footer" id="keluhan">
+          <form method="post" action="/report">
+            <div class="modal-content">
+              <h4 class="center-align">Form Keluhan</h4>
+              <div class="row">
+                <div class="input-field col s12">
+                  <input value="<%=user.nama%>" id="nama" type="text" class="validate" disabled>
+                  <label class="active" for="nama">Nama</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <input value="<%=user.telp%>" id="telp" type="tel" class="validate" disabled>
+                  <label class="active" for="telp">Telepon</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s6">
+                  <select name="kategori" id="kategori" required>
+                    <option value="" disabled selected><%=(kategori.length == 0) ? 'Tidak ada data' : 'Pilih'%></option>
+                    <%kategori.forEach((data) => {%>
+                    <option value="<%=data.categoryId%>"><%=data.categoryName%></option>
+                    <%});%>
+                  </select>
+                  <label>Kategori Masalah</label>
+                </div>
+                <div class="input-field col s6">
+                  <select name="unit" id="unit" required>
+                    <option value="" disabled selected><%=(unit.length == 0) ? 'Tidak ada data' : 'Pilih'%></option>
+                    <%unit.forEach((data) => {%>
+                    <option value="<%=data.unitId%>"><%=data.unitName%></option>
+                    <%});%>
+                  </select>
+                  <label>Unit</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <textarea id="keterangan" name="keterangan" class="materialize-textarea" required></textarea>
+                  <label for="keterangan">Keterangan Masalah</label>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="modal-close waves-effect waves-light btn-flat left" type="button">Batal</button>
+              <button class="waves-effect waves-light btn-flat teal white-text right" type="submit">Kirim</button>
+            </div>
+          </form>
+        </div>
+        <%}%>
+        <% if(message.length > 0){%>
+        <div id="modal-message" class="modal red white-text">
+          <button class="modal-close btn-small btn-flat right white waves-effect waves-dark"><i class="material-icons red-text">close</i></button>
+          <div class="modal-content">
+            <h4>Alert</h4>
+            <p><%=message%></p>
+          </div>
+        </div>
+        <script>
+        M.Modal.getInstance($('#modal-message')).open();
+        </script>
+        <%}%>
+      </div>
+    </div>
+  </main>
+  <footer>
+    
+  </footer>
+  <% include partials/script %>
+</body>
+</html>

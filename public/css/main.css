@@ -1,0 +1,24 @@
+html, body, .box {
+    height: 100%
+}
+
+.box {
+    display: flex;
+    flex-flow: row;
+}
+
+.box .navbar-fixed {
+    flex: 0 1 auto;
+}
+
+.box .content {
+    flex: 1 1 auto;
+}
+
+.box .footer {
+    flex: 0 1 auto;
+}
+
+.brand-logo {
+    margin-left: 15px;
+}

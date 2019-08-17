@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% include partials/head %>
+  <style>
+    header, main, footer {
+      padding-left: 300px;
+    }
+    td, th {
+      border-right: solid 1px; 
+      border-left: solid 1px;
+    }
+
+    @media only screen and (max-width : 992px) {
+      header, main, footer {
+        padding-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <% include partials/navbar %>
+    <% include partials/sidenav %>
+  </header>
+  <main>
+    <div class="content valign-wrapper">
+      <div class="">
+      <% if(user){%>
+        <h4 class="center-align">Laporan Keluhan</h4>
+        <table class="striped">
+          <thead>
+            <tr>
+                <th class="center-align">Gender</th>
+                <th class="center-align">Nama</th>
+                <th class="center-align">Email</th>
+                <th class="center-align">Tanggal</th>
+                <th class="center-align">Bulan</th>
+                <th class="center-align">Masalah</th>
+                <th class="center-align">Kategori</th>
+                <th class="center-align">Unit</th>
+                <th class="center-align">Status</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <%reports.forEach((data) => {%>
+            <tr>
+              <td><%=data.gender.charAt(0).toUpperCase() + data.gender.slice(1)%></td>
+              <td><%=data.nama%></td>
+              <td><%=data.email%></td>
+              <td><%=data.tanggal%></td>
+              <td><%=data.bulan%></td>
+              <td><%=data.masalah%></td>
+              <td><%=data.categoryName%></td>
+              <td><%=data.unitName%></td>
+              <td><%=(data.status == 0) ? 'Close' : 'Open'%></td>
+            </tr>
+            <%})%>
+          </tbody>
+        </table>
+        <%}%>
+      </div>
+    </div>
+  </main>
+  <footer>
+    
+  </footer>
+  <% include partials/script %>
+</body>
+</html>

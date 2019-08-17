@@ -1,0 +1,33 @@
+<div class="">
+    <%if (typeof user != 'undefined'){%>
+    <ul id="user-drop" class="dropdown-content">
+        <li><a class="waves-effect waves-light red darken-2 white-text" href="/logout"><i class="material-icons left">exit_to_app</i>Logout</a></li>
+    </ul>
+    <%}%>
+    <ul id="nav-mobile" class="dropdown-content">
+    <%if (typeof user == 'undefined'){%>
+        <li><a href="/register">REGISTER</a></li>
+        <li><a class="waves-effect waves-teal teal darken-2 white-text" href="/login">LOGIN</a></li>
+    <%} else {%>
+        <li><a class="dropdown-trigger" href="#" data-target="user-drop">Halo, <b><%=user.nama%></b><i class="material-icons right">arrow_drop_down</i></a></li>
+    <%}%>
+    </ul>
+    <nav class="teal">
+        <div class="nav-wrapper">
+            <%if (typeof user != 'undefined' && user.role != 0){%>
+            <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <%}%>
+            <a href="/" class="brand-logo">My Apps</a>
+            <ul class="right">
+            <%if (typeof user == 'undefined'){%>
+                <li><a class="hide-on-med-and-down" href="/register">REGISTER</a></li>
+                <li><a class="waves-effect waves-teal btn-flat teal darken-2 white-text hide-on-med-and-down" href="/login">LOGIN</a></li>
+                <li><a href="#" data-target="nav-mobile" class="dropdown-trigger right hide-on-large-only"><i class="material-icons">person</i></a></li>
+            <%} else {%>
+                <li><a class="dropdown-trigger hide-on-small-only" href="#" data-target="user-drop">Halo, <b><%=user.nama.split(" ")[0]%></b><i class="material-icons right">arrow_drop_down</i></a></li>
+                <li><a class="dropdown-trigger hide-on-med-and-up" href="#" data-target="user-drop"><i class="material-icons right">person</i></a></li>
+            <%}%>
+            </ul>
+        </div>
+    </nav>
+</div>
