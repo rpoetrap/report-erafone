@@ -15,12 +15,11 @@ const Controller = require('./controller')
 
 passport.use(new Strategy(
     {
-        usernameField: 'email',
         passReqToCallback: true
     },
-    function(req, email, password, done) {
-      let sql = "SELECT password, userId FROM auth WHERE email = ? LIMIT 1"
-      db.query(sql, [email], (err, user, fields) => {
+    function(req, username, password, done) {
+      let sql = "SELECT password, userId FROM auth WHERE username = ? LIMIT 1"
+      db.query(sql, [username], (err, user, fields) => {
           if(err) return done(err)
           if(user.length == 0) return done(null, false, req.flash('message', "Email belum terdaftar"))
           
