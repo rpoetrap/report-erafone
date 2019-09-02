@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% include partials/head %>
+</head>
+<body>
+  <header>
+    <% include partials/navbar %>
+  </header>
+  <main>
+    <div class="container-fluid">
+      <div class="row flex-xl-nowrap">
+        <% if(user.role != 0) {%>
+        <div class="col-12 col-md-3 col-xl-2 bd-sidebar">
+          <% include partials/sidenav %>
+        </div>
+        <% } %>
+        <div class="<%=(user.role != 0) ? 'col-12 col-md-9 col-xl-10 py-md-3 pl-md-5' : 'col-md-8'%>">
+          <% if(user){%>
+          <div class="row">
+            <div class="col-12">
+              <h4 class="text-center mb-4 mt-1"><%=page%></h4>
+              <table class="table table-striped" style="width:100%">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col"><b>No</b></th>
+                    <th scope="col"><b>Nama <%manage_data.type.charAt(0).toUpperCase() + manage_data.type.slice(1)%></b></th>
+                    <th class="text-center" scope="col"><b>Action</b></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <%for(var i = 0; i < manage_data.list.length; i++){%>
+                  <tr>
+                    <td><%=(i + 1)%></td>
+                    <td><%=manage_data.list[i].name%></td>
+                    <td class="text-center"><a class="btn btn-sm btn-danger" href="/<%=manage_data.type%>/<%=manage_data.list[i].id%>/delete">Hapus</a></td>
+                  </tr>
+                  <%}%>
+                  <tr>
+                    <td colspan="3"><button class="btn btn-primary btn-block" data-toggle="modal" data-target="#<%=manage_data.type%>"><%=manage_data.type.charAt(0).toUpperCase() + manage_data.type.slice(1)%> Baru</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="<%=manage_data.type%>">
+            <div class="modal-dialog">
+                <form method="post">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title">Tambah <%=manage_data.type.charAt(0).toUpperCase() + manage_data.type.slice(1)%></h4>
+                    </div>
+                    <div class="modal-body">
+                      <div class="form-group">
+                        <label for="nama">Nama <%=manage_data.type.charAt(0).toUpperCase() + manage_data.type.slice(1)%></label>
+                        <input id="nama" name="nama" type="text" class="form-control" required>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button class="btn btn-danger" data-dismiss="modal" type="button">Batal</button>
+                      <button class="btn btn-primary" type="submit">Kirim</button>
+                    </div>
+                  </div>
+                </form>
+            </div>
+          </div>
+          <%}%>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer>
+    
+  </footer>
+  <% include partials/script %>
+</body>
+</html>

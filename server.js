@@ -18,17 +18,18 @@ passport.use(new Strategy(
         passReqToCallback: true
     },
     function(req, username, password, done) {
-      let sql = "SELECT password, userId FROM auth WHERE username = ? LIMIT 1"
-      db.query(sql, [username], (err, user, fields) => {
-          if(err) return done(err)
-          if(user.length == 0) return done(null, false, req.flash('message', "Email belum terdaftar"))
-          
-          bcrypt.compare(password, user[0]["password"], (err, isMatch) => {
-              if(err) return done(err)
-              if(isMatch) return done(null, user[0])
-              else return done(null, false, req.flash('message', "Password tidak sesuai"))
-          })
-      })
+        let formData = req.body
+        let sql = "SELECT password, auth.userId FROM auth JOIN users ON users.userId = auth.userId WHERE auth.username = ? AND users.role = ? LIMIT 1"
+        db.query(sql, [username, formData['role']], (err, user, fields) => {
+            if(err) return done(err)
+            if(user.length == 0) return done(null, false, req.flash('message', "User belum terdaftar"))
+            
+            bcrypt.compare(password, user[0]["password"], (err, isMatch) => {
+                if(err) return done(err)
+                if(isMatch) return done(null, user[0])
+                else return done(null, false, req.flash('message', "Password tidak sesuai"))
+            })
+        })
     }
 ));
 

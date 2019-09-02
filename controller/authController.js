@@ -25,12 +25,12 @@ exports.register = (req, res, next) => {
                                         res.render('register', {page:'Register', result: output})
                                     } else {
                                         let sql = "INSERT INTO users SET ? "
-                                        let post = { nama: formData["nama"], gender: formData["gender"], telp: formData["telp"] }
+                                        let post = { nama: formData["nama"], gender: formData["gender"], telp: formData["telp"]}
                                         db.query(sql, post, (err, data, fields) => {
                                             if(!err){
                                                 let userId = data.insertId
                                                 let sql = "INSERT INTO auth SET ? "
-                                                let post = {email: formData["email"], password: hash, userId: userId}
+                                                let post = {email: formData["email"], password: hash, userId: userId, username: formData["username"]}
                                                 db.query(sql, post, (err, data, fields) => {
                                                     if(!err) {
                                                         output.status = true

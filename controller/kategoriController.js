@@ -1,7 +1,7 @@
 const db = require('../db')
 
 function getAllKategori(callback){
-    let sql = "SELECT * FROM report_categories"
+    let sql = "SELECT categoryId as id, categoryName as name FROM report_categories"
     db.query(sql, (err, data, fields) => {
         if (err) return callback(err)
         if (data.length == 0) return callback(null, false, {message: "Tidak ada data"})
@@ -36,7 +36,7 @@ exports.getKategori = (req, res, next) => {
                     kategori = data
                 }
 
-                res.render('kategori', {page: 'Kelola Kategori', user: req.user, kategori: kategori, message: req.flash('message')})
+                res.render('manage', {page: 'Kelola Kategori', user: req.user, manage_data: {type: 'kategori', list: kategori}, message: req.flash('message')})
             })
         }
         

@@ -2,56 +2,68 @@
 <html lang="en">
 <head>
   <% include partials/head %>
-  <style>
-    header, main, footer {
-      padding-left: 300px;
-    }
-
-    @media only screen and (max-width : 992px) {
-      header, main, footer {
-        padding-left: 0;
-      }
-    }
-  </style>
 </head>
 <body>
   <header>
     <% include partials/navbar %>
-    <% include partials/sidenav %>
   </header>
   <main>
-    <div class="content valign-wrapper">
-      <div class="container">
-      <% if(user){%>
-        <div class="row">
-          <div class="col s12">
-            <h4 class="center-align"><%=page%></h4>
-            <div class="collection">
-              <div class="row collection-item black-text">
-                <div class="col s2 m1"><b>No</b></div>
-                <div class="col s7 m6 l8 truncate"><b>Komplain</b></div>
-                <div class="col m3 l2 hide-on-small-only"><b>Tanggal</b></div>
-                <div class="col s3 m2 l1 center-align"><b>Status</b></div>
-              </div>
-              <%for(var i = 0; i < reports.length; i++){%>
-              <a class="row collection-item black-text" href="/report/<%=reports[i].reportId%>">
-                <div class="col s2 m1"><%=((pagination.current - 1) * 10) + (i + 1)%></div>
-                <div class="col s7 m6 l8 truncate"><%=reports[i].masalah%></div>
-                <div class="col m3 l2 hide-on-small-only"><%=reports[i].tanggal%></div>
-                <div class="col s3 m2 l1"><span class="new badge <%=(reports[i].status) ? 'deep-orange':'teal'%>" data-badge-caption="<%=(reports[i].status) ? 'Open':'Close'%>"></span></div>
-              </a>
-              <%}%>
-            </div>
-            <ul class="pagination center-align">
-              <li class="<%=(pagination.current == 1) ? 'disabled' : 'waves-effect'%>"><a <%=(pagination.current > 1) ? 'href=?page='+(parseInt(pagination.current) - 1) : ''%>><i class="material-icons">chevron_left</i></a></li>
-              <%pagination.pages.forEach((pages) => {%>
-              <li class="<%=(pages == pagination.current) ? 'active teal': 'waves-effect'%>"><a <%=(pages != pagination.current) ? 'href=?page='+pages: ''%>><%=pages%></a></li>
-              <%})%>
-              <li class="<%=(pagination.current == Math.ceil(pagination.total/10)) ? 'disabled' : 'waves-effect'%>"><a <%=(pagination.current < Math.ceil(pagination.total/10)) ? 'href=?page='+(parseInt(pagination.current) + 1) : ''%>><i class="material-icons">chevron_right</i></a></li>
-            </ul>
-          </div>
+    <div class="container-fluid">
+      <div class="row flex-xl-nowrap">
+        <% if(user.role != 0) {%>
+        <div class="col-12 col-md-3 col-xl-2 bd-sidebar">
+          <% include partials/sidenav %>
         </div>
-        <%}%>
+        <% } %>
+        <div class="<%=(user.role != 0) ? 'col-12 col-md-9 col-xl-10 py-md-3 pl-md-5' : 'col-md-8'%>">
+          <%if(message.length > 0){%>
+          <div class="position-relative row">
+            <div class="position-absolute col-12">
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <%=message%>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <%}%>
+          <% if(user){%>
+          <div class="row">
+            <div class="col-12">
+              <h4 class="text-center mb-4 mt-1"><%=page%></h4>
+              <table id="report" class="table table-striped" style="width:100%">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col"><b>No</b></th>
+                    <th scope="col"><b>Komplain</b></th>
+                    <th scope="col"><b>Tanggal</b></th>
+                    <th scope="col"><b>Status</b></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <%for(var i = 0; i < reports.length; i++){%>
+                    <tr class="clickable-row" data-href="/report/<%=reports[i].reportId%>">
+                      <td><%=((pagination.current - 1) * 10) + (i + 1)%></td>
+                      <td><%=reports[i].masalah%></td>
+                      <td><%=reports[i].tanggal%></td>
+                      <td><span class="badge badge-<%=(reports[i].status) ? 'warning':'success'%>"><%=(reports[i].status) ? 'Open':'Close'%></span></td>
+                    </tr>
+                  <%}%>
+                </tbody>
+              </table>
+              <ul class="pagination justify-content-center">
+                <li class="page-item <%=(pagination.current == 1) ? 'disabled' : ''%>"><a class="page-link" <%=(pagination.current > 1) ? 'href=?page='+(parseInt(pagination.current) - 1) : ''%> aria-label="Previous"><span aria-hidden="true">&laquo;</span>
+                </a></li>
+                <%pagination.pages.forEach((pages) => {%>
+                <li class="page-item <%=(pages == pagination.current) ? 'active': ''%>"><a class="page-link" <%=(pages != pagination.current) ? 'href=?page='+pages: ''%>><%=pages%></a></li>
+                <%})%>
+                <li class="page-item <%=((pagination.current == Math.ceil(pagination.total/10)) || (Math.ceil(pagination.total/10 == 0))) ? 'disabled' : ''%>"><a class="page-link" <%=(pagination.current < Math.ceil(pagination.total/10)) ? 'href=?page='+(parseInt(pagination.current) + 1) : ''%> aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+              </ul>
+            </div>
+          </div>
+          <%}%>
+        </div>
       </div>
     </div>
   </main>

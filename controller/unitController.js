@@ -1,7 +1,7 @@
 const db = require('../db')
 
 function getAllUnit(callback){
-    let sql = "SELECT * FROM report_units"
+    let sql = "SELECT unitId as id, unitName as name FROM report_units"
     db.query(sql, (err, data, fields) => {        
         if (err) return callback(err)
         if (data.length == 0) return callback(null, false, {message: "Tidak ada data"})
@@ -36,7 +36,7 @@ exports.getUnit = (req, res, next) => {
                     unit = data
                 }
 
-                res.render('unit', {page: 'Kelola Unit', user: req.user, unit: unit, message: req.flash('message')})
+                res.render('manage', {page: 'Kelola Unit', user: req.user, manage_data: {type: 'unit', list: unit}, message: req.flash('message')})
             })
         }
         

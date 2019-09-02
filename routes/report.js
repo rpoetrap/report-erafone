@@ -12,9 +12,9 @@ router.post('/', function(req, res) {
     }
     if(req.isAuthenticated()){
         let userId = req.user.userId
-        if(formData["kategori"] && formData["unit"] && formData["keterangan"]){
+        if(formData["kategori"] && formData["unit"] && formData["keterangan"] && formData["gender"] && formData["nama"] && formData["email"] && formData["telp"]){
             let sql = "INSERT INTO reports SET ?"
-            let post ={userId: userId, masalah: formData["keterangan"], kategori: formData["kategori"], unit: formData["unit"], tanggal: new Date()}
+            let post ={userId: userId, masalah: formData["keterangan"], kategori: formData["kategori"], unit: formData["unit"], tanggal: new Date(), contact_gender: formData["gender"], contact_name: formData["nama"], contact_email: formData["email"], contact_telp: formData["telp"]}
             db.query(sql, post, (err, data, fields) => {
                 if (!err){
                     output.status = true

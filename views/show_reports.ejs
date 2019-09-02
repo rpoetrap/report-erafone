@@ -1,0 +1,34 @@
+<h4 class="text-center mb-4 mt-1">Laporan Keluhan</h4>
+<table class="table table-striped" style="width:100%">
+    <thead>
+    <tr>
+        <!-- <th scope="col">Gender</th> -->
+        <th scope="col">Nama</th>
+        <th scope="col">Email</th>
+        <th scope="col">Telepon</th>
+        <th scope="col">Tanggal</th>
+        <!-- <th scope="col">Bulan</th> -->
+        <th scope="col">Masalah</th>
+        <th scope="col">Kategori</th>
+        <th scope="col">Unit</th>
+        <th scope="col">Status</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <%reports.forEach((data) => {%>
+    <tr>
+        <!-- <td><%=data.contact_gender.charAt(0).toUpperCase() + data.contact_gender.slice(1)%></td> -->
+        <td><%=data.contact_name%></td>
+        <td><%=data.contact_email%></td>
+        <td><%=data.contact_telp%></td>
+        <td><%=data.tanggal%></td>
+        <!-- <td><%=data.bulan%></td> -->
+        <td><%=data.masalah%></td>
+        <td><%=data.categoryName%></td>
+        <td><%=data.unitName%></td>
+        <td><%=(data.status == 0) ? 'Close' : 'Open'%></td>
+    </tr>
+    <%})%>
+    </tbody>
+</table>

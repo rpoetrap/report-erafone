@@ -125,7 +125,7 @@ module.exports = (req, res, next) => {
                             item['bulan'] = bulan[bulanId]
                             
                         })
-                        res.render('index_manajer', {page: 'Home', user: req.user, reports: reports, kategori: kategori, unit: unit, message: req.flash('message')})
+                        res.render('index', {page: 'Home', user: req.user, reports: reports, kategori: kategori, unit: unit, message: req.flash('message')})
                     })
                 } else if(req.user['role'] == 1){
                     getAllOpenReports(page, (err, data, fields) => {
@@ -145,7 +145,7 @@ module.exports = (req, res, next) => {
                             }
                             let pages = pagination(Math.ceil(reportsCount/10), page)
                             
-                            res.render('index_callcenter', {page: 'Home', user: req.user, reports: reports, kategori: kategori, unit: unit, message: req.flash('message'), pagination: {current: page, total: reportsCount, pages: pages}})
+                            res.render('index', {page: 'Home', user: req.user, reports: reports, kategori: kategori, unit: unit, message: req.flash('message'), pagination: {current: page, total: reportsCount, pages: pages}})
                         })
                     })
                 } else {
@@ -166,7 +166,7 @@ module.exports = (req, res, next) => {
                             }
                             let pages = pagination(Math.ceil(reportsCount/10), page)
                             
-                            res.render('index_pelanggan', {page: 'Home', user: req.user, reports: reports, kategori: kategori, unit: unit, message: req.flash('message'), pagination: {current: page, total: reportsCount, pages: pages}})
+                            res.render('index', {page: 'Home', user: req.user, reports: reports, kategori: kategori, unit: unit, message: req.flash('message'), pagination: {current: page, total: reportsCount, pages: pages}})
                         })
                     })
                 }

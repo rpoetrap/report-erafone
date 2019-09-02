@@ -1,0 +1,58 @@
+<div class="row mt-5">
+    <div class="col-sm-12 col-lg-10 mx-auto">
+        <div class="card shadow">
+        <div class="card-header text-center">
+            <h5 class="mb-0">Input Keluhan</h5>
+        </div>
+        <div class="card-body">
+            <form method="post" action="/report">
+            <div class="form-row text-center">
+                <div class="form-group col-md-2">
+                <select id="gender" name="gender" class="form-control" placeholder="Titel" required>
+                    <option value="1" <%=((user.gender == 'bapak') && (user.role == 0)) ? 'selected' : ''%>>Bapak</option>
+                    <option value="2" <%=((user.gender == 'ibu') && (user.role == 0)) ? 'selected' : ''%>>Ibu</option>
+                </select>
+                </div>
+                <div class="form-group col-md-10">
+                <input value="<%=(user.role == 0) ? user.nama : ''%>" id="nama" name="nama" type="text" class="form-control" placeholder="Nama" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-12">
+                <input value="<%=(user.role == 0) ? user.email : ''%>" id="email" name="email" type="email" class="form-control" placeholder="Email" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-12">
+                <input value="<%=(user.role == 0) ? user.telp : ''%>" id="telp" name="telp" type="tel" class="form-control" placeholder="Telepon" required>
+                </div>
+            </div>
+            <div class="form-row text-center">
+                <div class="form-group col-sm-6">
+                <select class="form-control" name="kategori" id="kategori" required>
+                    <option value="" disabled selected><%=(kategori.length == 0) ? 'Tidak ada data' : 'Pilih Jenis Keluhan'%></option>
+                    <%kategori.forEach((data) => {%>
+                    <option value="<%=data.categoryId%>"><%=data.categoryName%></option>
+                    <%})%>
+                </select>
+                </div>
+                <div class="form-group col-sm-6">
+                <select class="form-control" name="unit" id="unit" required>
+                    <option value="" disabled selected><%=(unit.length == 0) ? 'Tidak ada data' : 'Pilih Unit'%></option>
+                    <%unit.forEach((data) => {%>
+                    <option value="<%=data.unitId%>"><%=data.unitName%></option>
+                    <%});%>
+                </select>
+                </div>
+            </div>
+            <div class="form-group row text-center">
+                <div class="col-sm-12">
+                <textarea id="keterangan" name="keterangan" class="form-control" rows="3" placeholder="Keterangan masalah" required></textarea>
+                </div>
+            </div>
+            <button class="btn btn-primary btn-block" type="submit">Kirim</button>
+            </form>
+        </div>
+        </div>
+    </div>
+</div>

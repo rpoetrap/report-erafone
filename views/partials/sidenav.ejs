@@ -1,10 +1,11 @@
-<ul id="slide-out" class="sidenav sidenav-fixed">
-    <li><a href="/report/open">Keluhan Terbuka</a></li>
-    <li><a href="/report/close">Keluhan Selesai</a></li>
+<div class="list-group">
+    <a class="list-group-item list-group-item-action list-group-item-info" href="/report/open">Keluhan Terbuka</a>
+    <a class="list-group-item list-group-item-action list-group-item-info" href="/report/close">Keluhan Selesai</a>    
     <%if(user['role'] == 2){%>
-    <li><a href="/">Laporan Keluhan</a></li>
-    <li class="divider"></li>
-    <li><a href="/kategori">Kelola Kategori</a></li>
-    <li><a href="/unit">Kelola Unit</a></li>
+    <a class="list-group-item list-group-item-action list-group-item-info" href="/">Laporan Keluhan</a>
+    <a class="list-group-item list-group-item-action list-group-item-info" href="/kategori">Kelola Kategori</a>
+    <a class="list-group-item list-group-item-action list-group-item-info" href="/unit">Kelola Unit</a>
+    <%} else {%>
+        <a class="list-group-item list-group-item-action list-group-item-info" href="/">Input Keluhan Baru</a>
     <%}%>
-</ul>
+    </div>
